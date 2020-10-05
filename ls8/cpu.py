@@ -113,3 +113,5 @@ class CPU:
                 print(f"Value at {operand_a}: {self.reg[operand_a]}")
                 # increment pc
                 self.pc += 2
+                
+                #returns 8
