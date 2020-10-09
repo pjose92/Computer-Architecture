@@ -64,14 +64,17 @@ class CPU:
             print(" %02X" % self.reg[i], end='')
 
         print()
-        
+
+    # `MAR`: Memory Address Register, holds the memory address we're reading or writing
+    # `MDR`: Memory Data Register, holds the value to write or the value just read
+
        
-    # MAR/memory address register/address being read
+    # MAR- memory address register - address being read
     def ram_read(self, MAR):
         MDR = self.ram[MAR]
         return MDR
 
-    # MAR/address being written to MDR/memory data register- data being written to address
+    # MAR- address being written to MDR - memory data register - data being written to address
     def ram_write(self, MAR, MDR):
         self.ram[MAR] = MDR
 
@@ -89,12 +92,16 @@ class CPU:
         while self.running:
             # set instruction register
             ir = self.ram_read(self.pc)
+            
+        # `PC`: Program Counter, address of the currently executing instruction
+        # `IR`: Instruction Register, contains a copy of the currently executing instruction
 
-            # HLT INSTRUCTION: Halt CPU & exit emulator
+
+            # HLT/HALT: Halt CPU & exit emulator
             if ir is HLT:
                 self.running = False
 
-            # LDI INSTRUCTION: Set value of register to an integer
+            # LDI/LDI register immediate: Set value of register to an integer
             elif ir is LDI:
                 # define register number
                 operand_a = self.ram_read(self.pc+1)
@@ -105,7 +112,7 @@ class CPU:
                 # increment pc
                 self.pc += 3
 
-            # PRN INSTRUCTION: print numeric value stored in given register
+            # PRN/pseudo-instruction: print numeric value stored in given register
             elif ir is PRN:
                 # define register number
                 operand_a = self.ram_read(self.pc+1)
